@@ -13,4 +13,12 @@ async function WorkWork() {
     cities.forEach((city) => {
         console.log(city.data.results[0].formatted_address);
     });
+
+    // task01-2
+    let country = await Promise.any([
+        axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=Paris`),
+        axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=Nice`)
+    ]);
+    console.log('------- task01-2 -------')
+    console.log(country.data.results[0].formatted_address.split(", ")[1]);
 }
