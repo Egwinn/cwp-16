@@ -17,7 +17,7 @@ async function WorkWork() {
         console.log(geolib.getDistance(value[0].data.results[0].geometry.location,
             value[1].data.results[0].geometry.location));
     }, function (err) {
-        console.error(err.stack);
+        console.error(err);
     });
 
     // task02-2
@@ -38,6 +38,21 @@ async function WorkWork() {
         });
         console.log(geolib.findNearest(cities['Minsk, Belarus'], cities, 1));
     }, function (err) {
-        console.error(err.stack);
+        console.error(err);
+    });
+
+    // task02-3
+    console.log('------- task02-3 -------');
+    await co(function* () {
+        return yield Promise.all([
+            axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=Piazza del Сolosseo`)
+        ]);
+    }).then(function (value) {
+        console.log(value[0].data.results[0].formatted_address);
+        value[0].data.results[0].address_components.forEach((component) => {
+            console.log(`   -${component.long_name}`);
+        });
+    }, function (err) {
+        console.error(err);
     });
 }
